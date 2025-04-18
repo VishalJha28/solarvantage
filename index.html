@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Solvantage Energy</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      margin: 0;
+      background: #f6f6f6;
+      color: #222;
+    }
+    header, footer {
+      background: #ffffff;
+      padding: 1rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+    nav a {
+      margin: 0 1rem;
+      text-decoration: none;
+      color: #333;
+    }
+    .hero {
+      background: url('https://images.unsplash.com/photo-1584277265583-12e707df628b') no-repeat center center/cover;
+      height: 400px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      color: white;
+    }
+    .hero h1 {
+      font-size: 2.5rem;
+      background: rgba(0,0,0,0.5);
+      padding: 1rem;
+    }
+    .btn-primary {
+      background: #ff7a3d;
+      color: white;
+      border: none;
+      padding: 0.75rem 1.5rem;
+      font-size: 1rem;
+      border-radius: 1.5rem;
+      cursor: pointer;
+    }
+    .section {
+      padding: 2rem;
+      text-align: center;
+    }
+    .card-container {
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+    .card {
+      background: white;
+      padding: 1rem;
+      border-radius: 12px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+      width: 250px;
+      text-align: left;
+    }
+    .calculator, .results {
+      background: white;
+      max-width: 600px;
+      margin: 1rem auto;
+      padding: 2rem;
+      border-radius: 12px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    }
+    input, select {
+      width: 100%;
+      padding: 0.75rem;
+      margin: 0.5rem 0;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+    }
+    .footer-contact {
+      font-size: 0.9rem;
+      line-height: 1.5;
+    }
+    .assumptions {
+      background: #fff;
+      padding: 1rem;
+      margin: 1rem auto;
+      max-width: 600px;
+      border-radius: 12px;
+      font-size: 0.9rem;
+      color: #555;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div><strong>Solvantage Energy</strong></div>
+    <nav>
+      <a href="#home">Home</a>
+      <a href="#about">About</a>
+      <a href="#calculator">Calculator</a>
+      <a href="#contact">Contact</a>
+    </nav>
+  </header>
+
+  <section class="hero" id="home">
+    <div>
+      <h1>Power Your Home. Cut Your Bills.</h1>
+      <button class="btn-primary" onclick="document.getElementById('calculator').scrollIntoView()">Calculate Your Savings</button>
+    </div>
+  </section>
+
+  <section class="section">
+    <h2>Why Choose Us?</h2>
+    <div class="card-container">
+      <div class="card"><h4>Save on Bills</h4><p>Reduce your electricity expenses significantly with our solar solutions.</p></div>
+      <div class="card"><h4>Reliable Energy</h4><p>Count on a consistent energy supply, independent of the grid.</p></div>
+      <div class="card"><h4>Eco-Friendly Choice</h4><p>Contribute to a greener planet by adopting renewable energy.</p></div>
+    </div>
+  </section>
+
+  <section class="section" id="calculator">
+    <h2>See How Much You Can Save with Solar</h2>
+    <p>Enter a few quick details to calculate your monthly and yearly savings from switching to solar power.</p>
+    <div class="calculator">
+      <label>Monthly Electricity Bill (₹)</label>
+      <input type="number" id="bill" value="138" />
+      <label>Your Location</label>
+      <input type="text" id="location" value="Chandigarh" />
+      <label>Type of Property</label>
+      <select id="property">
+        <option>Home</option>
+        <option>Apartment</option>
+        <option>Small Business</option>
+        <option>Other</option>
+      </select>
+      <button class="btn-primary" onclick="calculateSavings()">Calculate My Savings</button>
+    </div>
+    <div class="results" id="results" style="display:none;">
+      <h3>Your Savings</h3>
+      <p><strong>Estimated Monthly Savings (₹):</strong> <span id="monthly"></span></p>
+      <p><strong>Estimated Yearly Savings (₹):</strong> <span id="yearly"></span></p>
+      <p><strong>Payback Period (in years):</strong> <span id="payback"></span></p>
+      <p><strong>Environmental Impact:</strong> <span id="trees"></span></p>
+      <button class="btn-primary">Book a Free Consultation</button>
+    </div>
+    <div class="assumptions">
+      <h4>Assumptions Used</h4>
+      <ul>
+        <li>Electricity Unit Price: ₹8 per unit</li>
+        <li>Monthly usage converted into savings based on average solar offset</li>
+        <li>Inflation and tariff hike assumptions: 5% annually</li>
+        <li>Environmental impact: 1 tree per 900 units saved/year</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="section" id="contact">
+    <footer>
+      <div class="footer-contact">
+        Chandigarh, India<br />
+        Email: contact@solvantageenergy.com<br />
+        Phone: +91 12345 67890
+      </div>
+      <div>
+        &copy; 2023 Solvantage Energy. All rights reserved.
+      </div>
+    </footer>
+  </section>
+
+  <script>
+    function calculateSavings() {
+      const bill = parseFloat(document.getElementById('bill').value);
+      const monthlySavings = bill * 0.75; // 75% offset
+      const yearlySavings = monthlySavings * 12;
+      const payback = 5; // fixed
+      const treesSaved = Math.round((yearlySavings / 8) / 900 * 12); // ₹8/unit -> units saved / 900 = trees
+
+      document.getElementById('monthly').innerText = `₹${monthlySavings.toLocaleString()}`;
+      document.getElementById('yearly').innerText = `₹${yearlySavings.toLocaleString()}`;
+      document.getElementById('payback').innerText = `${payback} years`;
+      document.getElementById('trees').innerText = `Equivalent to saving ${treesSaved} trees annually`;
+
+      document.getElementById('results').style.display = 'block';
+    }
+  </script>
+</body>
+</html>
